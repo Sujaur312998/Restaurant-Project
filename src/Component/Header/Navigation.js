@@ -1,47 +1,48 @@
-import React,{Component} from "react"
-import { Navbar, NavbarBrand, Nav, NavItem,Collapse, NavbarToggler} from 'reactstrap';
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react';
+import { Navbar, NavbarBrand, Nav, NavItem, NavbarToggler, Collapse } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
 class Navigation extends Component {
-    state={
-        isToggled: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            isNavOpen: false
+        }
     }
-    isToggled=()=>{
+
+    navToggle = () => {
         this.setState({
-            isToggled: !this.state.isToggled
+            isNavOpen: !this.state.isNavOpen
         })
     }
     render() {
-        return(
+        return (
             <div>
-                <Navbar dark  color="dark" expand='sm'>
-                    <div className="container"> 
-                        <NavbarBrand href="/">Restarant Project</NavbarBrand>
-                        <Nav className='ml-auto' navbar>
-                        <NavbarToggler onClick={this.isToggled}/>
-                        <Collapse isOpen={this.state.isToggled} navbar >
-                            <NavItem>
-                                <Link to='/' className='nav-link action'>Home</Link>
-                            </NavItem>
-                            <NavItem>
-                                <Link to='/menu' className='nav-link '>Menu</Link>
-                            </NavItem>
-                            <NavItem>
-                                <Link to='/about' className='nav-link'>About</Link>
-                            </NavItem>
-                            <NavItem>
-                                <Link to='/contact' className='nav-link '>Contact</Link>
-                            </NavItem>
+                <Navbar dark color="dark" expand="sm">
+                    <div className="container">
+                        <NavbarToggler onClick={this.navToggle} />
+                        <NavbarBrand href="/">Bohubrihi Restaurant</NavbarBrand>
+                        <Collapse isOpen={this.state.isNavOpen} navbar>
+                            <Nav className="mr-auto" navbar>
+                                <NavItem>
+                                    <Link to="/" className="nav-link active">Home</Link>
+                                </NavItem>
+                                <NavItem>
+                                    <Link to="/menu" className="nav-link">Menu</Link>
+                                </NavItem>
+                                <NavItem>
+                                    <Link to="/about" className="nav-link">About</Link>
+                                </NavItem>
+                                <NavItem>
+                                    <Link to="/contact" className="nav-link">Contact</Link>
+                                </NavItem>
+                            </Nav>
                         </Collapse>
-                        
-                        
-
-                    </Nav>
                     </div>
-                    
                 </Navbar>
             </div>
-        )
+        );
     }
-    
 }
-export default Navigation
+
+export default Navigation;

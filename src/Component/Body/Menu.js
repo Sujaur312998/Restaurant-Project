@@ -1,59 +1,79 @@
-import React,{Component} from 'react'
-import DISHES from '../../data/dishes'
-import Menuitem from './Menuitem'
-import DishDetails from './DishDetails'
-import {CardColumns,Modal,MadalBody,ModalFooter,Button, ModalBody} from 'reactstrap'
+import React, { Component } from 'react';
+import MenuItem from './MenuItem';
+import DishDetail from './DishDetail';
+import { CardColumns, Modal, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { connect } from 'react-redux'
 
 
-class Menu extends Component{
-
-    state={
-        dishes: DISHES,
-        selectedDish: null,
-        openModal: false
+const mapStateToProps = state => {
+    return {
+        dishe: state.dishes,
+        comment: state.comment
     }
-    onDishSelect=(dish)=>{
+}
+class Menu extends Component {
+    constructor(props){
+        super(props)
+        this. state = {
+            selectedDish: null,
+            modalOpen: false
+        }
+    }
+
+    onDishSelect = dish => {
         this.setState({
-            selectedDish:dish
-        })
-        this.openModal()
+            selectedDish: dish,
+            modalOpen: !this.state.modalOpen
+        });
     }
-    
-    openModal=()=>{
+
+    toggleModal = () => {
         this.setState({
-            openModal: !this.state.openModal
+            modalOpen: !this.state.modalOpen
         })
     }
-    render(){
-        const menu=this.state.dishes.map(item=>{
-            return <Menuitem 
-                        dish={item} 
-                        key={item.id} 
-                        DishSelect={this.onDishSelect}
-                        />
+
+    render() {
+        const menu = this.props.dishe.map(item => {
+            return (
+                <MenuItem
+                    dish={item}
+                    key={item.id}
+                    DishSelect={() => this.onDishSelect(item)}
+                />
+            );
         })
 
-        let dishDetail=null
-    if (this.state.selectedDish != null){
-        dishDetail= <DishDetails dish={this.state.selectedDish} />
-    }  
-
-        return(
-            <div className='container'>
-                <div className='row'>
+        let dishDetail = null;
+        if (this.state.selectedDish != null) {
+            const comments = this.props.comment.filter(comment =>
+                comment.dishId === this.state.selectedDish.id
+            )
+            dishDetail = <DishDetail
+                dish={this.state.selectedDish}
+                comments={comments} />
+        }
+        return (
+            <div className="container">
+                <div className="row">
                     <CardColumns>
                         {menu}
                     </CardColumns>
-                    <Modal isOpen={this.state.openModal}>
-                        <ModalBody>{dishDetail}</ModalBody>
+                    <Modal isOpen={this.state.modalOpen}>
+                        <ModalBody>
+                            {dishDetail}
+                            <hr/>
+                        </ModalBody>
                         <ModalFooter>
-                            <Button onClick={this.openModal} color="secondary">Close</Button>
+                            <Button color="secondary" onClick={this.toggleModal}>
+                                Close
+                            </Button>
                         </ModalFooter>
                     </Modal>
                 </div>
             </div>
-        )
+        );
     }
 }
 
-export default Menu
+export default connect(mapStateToProps)(Menu);

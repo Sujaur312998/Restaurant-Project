@@ -1,28 +1,28 @@
-import React from 'react'
-import {Card, CardImg, CardBody,CardImgOverlay,CardTitle} from 'reactstrap'
+import React from 'react';
+import { Card, CardImg, CardImgOverlay, CardBody, CardTitle } from 'reactstrap';
 
-const Menuitem=(props)=>{
-    return(
+const MenuItem = props => {
+    return (
         <div>
-            <Card style={{margin:"15px"}}>
+            <Card style={{ margin: "10px" }}>
                 <CardBody>
-                    <CardImg 
-                        width="100%" 
-                        alt={props.dish.name} 
+                    <CardImg
+                        width="100%"
+                        alt={props.dish.name}
                         src={props.dish.image}
-                        style={{opacity:0.7}}
-                    />
+                        style={{ opacity: "0.5" }} />
                     <CardImgOverlay>
-                        <CardTitle 
-                            onClick={()=>props.DishSelect(props.dish)}
-                            style={{cursor: "pointer"}}>
-                            <h3>{props.dish.name}</h3>
+                        <CardTitle
+                            style={{ cursor: "pointer" }}
+                            onClick={props.DishSelect}
+                        >
+                            {props.dish.name}
                         </CardTitle>
                     </CardImgOverlay>
                 </CardBody>
             </Card>
         </div>
-    )
+    );
 }
 
-export default Menuitem
+export default MenuItem;
