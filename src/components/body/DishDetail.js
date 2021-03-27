@@ -1,8 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardText } from 'reactstrap';
 import LoadComments from './LoadComments';
-import CommentInput from './CommentInput'
-
+import CommentForm from './CommentForm';
 
 const DishDetail = props => {
     return (
@@ -10,7 +9,7 @@ const DishDetail = props => {
             <Card style={{ marginTop: "10px" }}>
                 <CardImg top src={props.dish.image} alt={props.dish.name} />
                 <CardBody style={{ textAlign: "left" }}>
-                    <CardTitle style={{fontWeight:'bold'}}>{props.dish.name}</CardTitle>
+                    <CardTitle>{props.dish.name}</CardTitle>
                     <CardText>
                         {props.dish.description}
                     </CardText>
@@ -19,7 +18,8 @@ const DishDetail = props => {
                     </CardText>
                     <hr />
                     <LoadComments comments={props.comments}></LoadComments>
-                    <CommentInput dishId={props.dish.id} addComment={props.addComment}/>
+                    <hr />
+                    <CommentForm dishId={props.dish.id} addComment={props.addComment} />
                 </CardBody>
             </Card>
         </div>
